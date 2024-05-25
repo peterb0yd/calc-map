@@ -13,11 +13,11 @@ const loader = new Loader({
 
 const mapOptions = {
     center: {
-        lat: 39.5501,
-        lng: -105.7821
+        lat: 39.4000,
+        lng: -105.0500
     },
     region: 'CO',
-    zoom: 9
+    zoom: 7
 };
 
 const setFeatures = (features: google.maps.Data.Feature[], index: number, countyName: string) => {
@@ -51,10 +51,25 @@ export default function InteractiveMap() {
 
             mapRef.current?.data.setStyle((feature) => {
                 const index = Number(feature.getProperty('index'));
+                const isColorful = feature.getProperty('isColorful');
                 return {
-                    fillColor: (index % 2 === 0) ? 'red' : 'blue',
-                    strokeWeight: 1
+                    fillColor: isColorful ? 'green' : 'blue',
+                    strokeWeight: 2
                 }
+            });
+
+            mapRef.current?.data.addListener("click", (event: google.maps.Data.MouseEvent) => {
+                const isColorful = event.feature.getProperty("isColorful");
+                event.feature.setProperty("isColorful", !isColorful);
+            });
+
+            mapRef.current?.data.addListener("mouseover", (event: google.maps.Data.MouseEvent) => {
+                mapRef.current?.data.revertStyle();
+                mapRef.current?.data.overrideStyle(event.feature, { strokeWeight: 4 });
+            });
+
+            mapRef.current?.data.addListener("mouseout", (event: google.maps.Data.MouseEvent) => {
+                mapRef.current?.data.revertStyle();
             });
 
         });
