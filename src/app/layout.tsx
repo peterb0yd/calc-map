@@ -19,12 +19,10 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <Head>
-                <Script
-                    async
-                    src={`https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_MAPS_API_KEY}&loading=async&callback=initMap`}
-                />
-            </Head>
+            <Script
+                async
+                src={`https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_MAPS_API_KEY}&loading=async&callback=initMap`}
+            />
             <body className={inter.className}>{children}</body>
         </html>
     );
