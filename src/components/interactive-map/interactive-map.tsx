@@ -29,6 +29,7 @@ const setFeatures = (features: google.maps.Data.Feature[], index: number, county
 
 export default function InteractiveMap() {
     const mapRef = useRef<google.maps.Map>();
+    const containerRef = useRef<HTMLDivElement>(null);
     const [mapSize, setMapSize] = useState({ width: 0, height: 0 });
 
     useEffect(() => {
@@ -76,24 +77,25 @@ export default function InteractiveMap() {
 
         // resize map
         const handleResize = () => {
-            setMapSize({
-                width: window.innerWidth,
-                height: window.innerHeight
-            });
+            const width = containerRef.current?.offsetWidth as number;
+            const height = containerRef.current?.offsetHeight as number;
+            setMapSize({ width, height });
         };
         handleResize();
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
-    }, [])
+    }, [containerRef.current])
 
     return (
-        <div
-            id="map"
-            className={styles.Map}
-            style={{
-                width: `${mapSize.width}px`,
-                height: `${mapSize.height}px`
-            }}
-        />
+        <div className={styles.InteractiveMap} ref={containerRef}>
+            <div
+                id="map"
+                className={styles.Map}
+                style={{
+                    width: `${mapSize.width}px`,
+                    height: `${mapSize.height}px`
+                }}
+            />
+        </div>
     )
 }

@@ -1,0 +1,15 @@
+
+.SideMenu {
+    height: 100vh;
+    width: var(--side-menu-width);
+    border-right: 1px solid var(--color-primary);
+    box-shadow: 0 0 10px 0 var(--color-primary);
+    z-index: 100;
+    padding: 1rem;
+}
+
+.logo {
+    width: 177px;
+    height: 60px;
+    position: relative;
+}

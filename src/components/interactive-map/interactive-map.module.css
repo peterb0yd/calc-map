@@ -1,4 +1,10 @@
 
+.InteractiveMap {
+    position: relative;
+    width: calc(100vw - var(--side-menu-width));
+    height: 100vh;
+}
+
 .Map {
     position: relative;
     width: 100%;
