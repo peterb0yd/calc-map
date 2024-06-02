@@ -1,5 +1,5 @@
 'use client';
-
+import { AcresMW, CodeCharacterization, CSGDeployedSolar, DecisionFactor, DecommissioningBond, Definitions, NonCSGDeployedSolar, PanelHeights, Permit1041Output, SolarOnAgLand, VegetationManagement, VisualImpacts, Fencing, DeployedSolar } from "@/interfaces/map-fields.interfaces";
 import { useEffect, useRef, useState } from 'react'
 import { Loader } from '@googlemaps/js-api-loader';
 import styles from './interactive-map.module.css';
@@ -20,18 +20,79 @@ const mapOptions = {
     zoom: 7
 };
 
+const colorMap = [
+    'red',
+    'blue',
+    'green',
+    'yellow',
+    'purple',
+    'orange',
+    'pink',
+    'brown',
+];
+
+const getEnumFromMapOption = (mapOption: string) => {
+    switch (mapOption) {
+        case 'panelHeight':
+            return PanelHeights;
+        case 'codeCharacterization':
+            return CodeCharacterization;
+        case 'definitions':
+            return Definitions;
+        case 'fencing':
+            return Fencing;
+        case 'acresMW':
+            return AcresMW;
+        case 'solarOnAgLand':
+            return SolarOnAgLand;
+        case 'permit1041Output':
+            return Permit1041Output;
+        case 'vegetationManagement':
+            return VegetationManagement;
+        case 'visualImpacts':
+            return VisualImpacts;
+        case 'decommissioningBond':
+            return DecommissioningBond;
+        case 'nonCSGDeployedSolar':
+            return NonCSGDeployedSolar;
+        case 'csgDeployedSolar':
+            return CSGDeployedSolar;
+        case 'decisionFactor':
+            return DecisionFactor;
+        case 'deployedSolar':
+            return DeployedSolar;
+        default:
+            return {};
+    }
+}
+
 const setFeatures = (features: google.maps.Data.Feature[], index: number, county: ICounty) => {
     features.map((feature) => {
         feature.setProperty('name', county.name);
         feature.setProperty('index', index);
+        feature.setProperty('panelHeight', county.panelHeight);
+        feature.setProperty('codeCharacterization', county.codeCharacterization);
+        feature.setProperty('definitions', county.definitions);
+        feature.setProperty('fencing', county.fencing);
+        feature.setProperty('acresMW', county.acresMW);
+        feature.setProperty('solarOnAgLand', county.solarOnAgLand);
+        feature.setProperty('permit1041Output', county.permit1041Output);
+        feature.setProperty('vegetationManagement', county.vegetationManagement);
+        feature.setProperty('visualImpacts', county.visualImpacts);
+        feature.setProperty('decommissioningBond', county.decommissioningBond);
+        feature.setProperty('nonCSGDeployedSolar', county.nonCSGDeployedSolar);
+        feature.setProperty('csgDeployedSolar', county.csgDeployedSolar);
+        feature.setProperty('decisionFactor', county.decisionFactor);
+        feature.setProperty('deployedSolar', county.deployedSolar);
     });
 }
 
 interface InteractiveMapProps {
     counties: Array<ICounty>;
+    mapOption: string;
 }
 
-export const InteractiveMap = ({ counties }: InteractiveMapProps) => {
+export const InteractiveMap = ({ counties, mapOption }: InteractiveMapProps) => {
     const mapRef = useRef<google.maps.Map>();
     const containerRef = useRef<HTMLDivElement>(null);
     const [mapSize, setMapSize] = useState({ width: 0, height: 0 });
@@ -87,7 +148,20 @@ export const InteractiveMap = ({ counties }: InteractiveMapProps) => {
         handleResize();
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
-    }, [containerRef.current])
+    }, [containerRef.current]);
+
+    useEffect(() => {
+        const values = Object.values(getEnumFromMapOption(mapOption));
+        mapRef.current?.data.setStyle((feature) => {
+            const propValue = feature.getProperty(mapOption);
+            const colorIndex = values.indexOf(propValue);
+
+            return {
+                fillColor: colorMap[colorIndex],
+                strokeWeight: 2
+            }
+        });
+    }, [mapOption])
 
     return (
         <div className={styles.InteractiveMap} ref={containerRef}>

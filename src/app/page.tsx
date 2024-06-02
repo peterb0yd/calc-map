@@ -11,7 +11,7 @@ const Home = async ({ searchParams }: PageProps) => {
     return (
         <main className={styles.Main}>
             <SideMenu mapOption={mapOption} />
-            <InteractiveMap counties={counties} />
+            <InteractiveMap counties={counties} mapOption={mapOption} />
         </main>
     );
 }
