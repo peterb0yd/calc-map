@@ -1,0 +1,15 @@
+.Label {
+	font-weight: 600;
+    font-size: var(--font-size-sm);
+	font-family: var(--font-primary);
+	color: var(--color-text-muted);
+    line-height: 1em;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.noEvents {
+    pointer-events: none;
+}

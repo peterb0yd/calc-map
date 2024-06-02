@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Loader } from '@googlemaps/js-api-loader';
 import styles from './interactive-map.module.css';
-import { GEOJSON_FILE_NAMES } from './interactive-map.utils'
+import { ICounty } from '@/api/county/county.interfaces';
 
 const loader = new Loader({
     apiKey: "AIzaSyAxRMopOY_mVRQHK1TA8BxzMZEnWZHvnlc",
@@ -20,14 +20,18 @@ const mapOptions = {
     zoom: 7
 };
 
-const setFeatures = (features: google.maps.Data.Feature[], index: number, countyName: string) => {
+const setFeatures = (features: google.maps.Data.Feature[], index: number, county: ICounty) => {
     features.map((feature) => {
-        feature.setProperty('name', countyName);
+        feature.setProperty('name', county.name);
         feature.setProperty('index', index);
     });
 }
 
-export default function InteractiveMap() {
+interface InteractiveMapProps {
+    counties: Array<ICounty>;
+}
+
+export const InteractiveMap = ({ counties }: InteractiveMapProps) => {
     const mapRef = useRef<google.maps.Map>();
     const containerRef = useRef<HTMLDivElement>(null);
     const [mapSize, setMapSize] = useState({ width: 0, height: 0 });
@@ -37,15 +41,14 @@ export default function InteractiveMap() {
         loader.importLibrary('maps').then(() => {
             mapRef.current = new google.maps.Map(document.getElementById("map") as HTMLDivElement, mapOptions);
 
-            GEOJSON_FILE_NAMES.map((fileName, i) => {
-                const countyName = fileName.match(/(\w+)-county/)?.[1];
+            counties.map((county, i) => {
                 mapRef.current?.data.loadGeoJson(
-                    fileName,
+                    county.fileName,
                     undefined,
                     features => setFeatures(
                         features,
                         i,
-                        countyName as string
+                        county,
                     )
                 );
             });

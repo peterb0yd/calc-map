@@ -1,0 +1,41 @@
+.Select {
+	cursor: pointer;
+	background-color: var(--color-surface-muted);
+	border: var(--input-border);
+	box-sizing: border-box;
+	color: var(--color-text);
+	padding: var(--input-padding);
+	border-radius: var(--input-border-radius);
+	height: var(--input-height);
+	font-size: var(--font-size-base);
+	line-height: 1rem;
+	margin: 0;
+
+	&:hover {
+		border: var(--input-border-hover);
+	}
+	&:focus {
+		border: var(--input-border-focus);
+	}
+}
+
+/** Sizes **/
+.sizeSm {
+	width: 120px;
+}
+.sizeMd {
+	width: 200px;
+}
+.sizeLg {
+	width: 300px;
+}
+
+/** Flex Grow **/
+.flexGrow {
+	width: 100%;
+}
+
+/** Full Width **/
+.fullWidth {
+	width: 100%;
+}

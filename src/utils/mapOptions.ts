@@ -1,0 +1,16 @@
+export const mapOptions = [
+	'panelHeight',
+	'codeCharacterization',
+	'definitions',
+	'fencing',
+	'acresMW',
+	'solarOnAgLand',
+	'permit1041Output',
+	'vegetationManagement',
+	'visualImpacts',
+	'decommissioningBond',
+	'nonCSGDeployedSolar',
+	'csgDeployedSolar',
+	'decisionFactor',
+	'deployedSolar',
+];

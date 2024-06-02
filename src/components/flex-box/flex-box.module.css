@@ -1,0 +1,19 @@
+.FlexBox {
+    display: flex;
+}
+
+.width-full {
+    width: 100%;
+}
+
+.width-auto {
+    width: auto;
+}
+
+.grow {
+    flex-grow: 1;
+}
+
+.col {
+    flex-direction: column;
+}
