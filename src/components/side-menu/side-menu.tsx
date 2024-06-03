@@ -6,6 +6,7 @@ import { Text } from '../text/text';
 import { Select } from '../select/select';
 import { mapOptions } from '@/utils/mapOptions';
 import { useRouter } from 'next/navigation'
+import { FlexBox } from '../flex-box/flex-box';
 
 interface SideMenuProps {
     mapOption: string;
@@ -23,13 +24,15 @@ export const SideMenu = ({ mapOption }: SideMenuProps) => {
             <div className={styles.logo}>
                 <Image src="/images/calc-logo.webp" alt="logo" fill />
             </div>
-            <Select
-                value={mapOption}
-                name='MapSelect'
-                label={'Select Map'}
-                options={mapOptions}
-                onSelect={setMapOption}
-            />
+            <FlexBox name="Menu" py="lg">
+                <Select
+                    value={mapOption}
+                    name='MapSelect'
+                    label={'Select Map'}
+                    options={mapOptions}
+                    onSelect={setMapOption}
+                />
+            </FlexBox>
         </div>
     );
 }

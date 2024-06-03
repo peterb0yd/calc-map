@@ -5,10 +5,11 @@ interface FlexBoxProps {
     name: string;
     width?: 'full' | 'auto';
     grow?: boolean;
+    py?: 'sm' | 'md' | 'lg' | 'xl';
     col?: boolean;
 }
 
-export const FlexBox = ({ name, width, grow, col, children }: React.PropsWithChildren<FlexBoxProps>) => {
+export const FlexBox = ({ name, width, grow, col, py, children }: React.PropsWithChildren<FlexBoxProps>) => {
     return (
         <div
             className={clsx(
@@ -19,6 +20,10 @@ export const FlexBox = ({ name, width, grow, col, children }: React.PropsWithChi
                     [styles['width-auto']]: width === 'auto',
                     [styles['grow']]: grow,
                     [styles['col']]: col,
+                    [styles['py-sm']]: py === 'sm',
+                    [styles['py-md']]: py === 'md',
+                    [styles['py-lg']]: py === 'lg',
+                    [styles['py-xl']]: py === 'xl',
                 })
             }
         >
