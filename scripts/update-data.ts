@@ -1,6 +1,6 @@
 const Airtable = require('airtable');
-const apiKey = 'patpyTtoLnSwIgvsk.d0d341b98c82a62a7f1c44f3c0211ce17103ee923c32ce1035dd0a2df9d5fd4f';
-const client = new Airtable({ apiKey }).base('apphTFsOGgn9HnUZY');
+const apiKey = '';
+const client = new Airtable({ apiKey }).base('');
 
 enum Counties {
 	ADAMS = 'adams',
