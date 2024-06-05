@@ -96,3 +96,20 @@ export enum DeployedSolar {
 	FIVE_TO_TEN_MW = '5 MW - 10 MW',
 	GREATER_THAN_10_MW = '> 10 MW',
 }
+
+export enum MapFields {
+	PANEL_HEIGHT = 'panelHeight',
+	CODE_CHARACTERIZATION = 'codeCharacterization',
+	DEFINITIONS = 'definitions',
+	FENCING = 'fencing',
+	ACRES_MW = 'acresMW',
+	SOLAR_ON_AG_LAND = 'solarOnAgLand',
+	PERMIT_1041_OUTPUT = 'permit1041Output',
+	VEGETATION_MANAGEMENT = 'vegetationManagement',
+	VISUAL_IMPACTS = 'visualImpacts',
+	DECOMMISSIONING_BOND = 'decommissioningBond',
+	NON_CSG_DEPLOYED_SOLAR = 'nonCSGDeployedSolar',
+	CSG_DEPLOYED_SOLAR = 'csgDeployedSolar',
+	DECISION_FACTOR = 'decisionFactor',
+	DEPLOYED_SOLAR = 'deployedSolar',
+}

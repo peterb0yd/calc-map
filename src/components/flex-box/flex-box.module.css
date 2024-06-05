@@ -37,3 +37,15 @@
     padding-top: 2rem;
     padding-bottom: 2rem;
 }
+
+.gap-sm {
+    gap: 0.25rem;
+}
+
+.gap-md {
+    gap: 0.5rem;
+}
+
+.gap-lg {
+    gap: 1rem;
+}

@@ -33,6 +33,7 @@ export const Select = ({ value, name, size = 'md', fullWidth, grow, label, optio
             name='Select-Label'
             width={fullWidth ? 'full' : undefined}
             grow={grow}
+            gap="sm"
             col
         >
             {label && (

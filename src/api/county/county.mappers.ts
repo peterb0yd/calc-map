@@ -1,24 +1,32 @@
 import { Record, FieldSet } from "airtable";
 import { ICounty } from "./county.interfaces";
+import { AcresMW, CodeCharacterization, CSGDeployedSolar, DecisionFactor, DecommissioningBond, Definitions, DeployedSolar, Fencing, NonCSGDeployedSolar, PanelHeights, Permit1041Output, SolarOnAgLand, VegetationManagement, VisualImpacts } from "@/enums/map-fields.enums";
 
 export const tableRecordToCounty = (record: Record<FieldSet>): ICounty => {
     const fields = record.fields;
+    let coordinates = { latitude: 0, longitude: 0 };
+    try {
+        coordinates = JSON.parse(fields.coordinates as string);
+    } catch (error) {
+        console.error('Error parsing coordinates', error);
+    }
     return {
         name: fields.Name as string,
         fileName: fields.fileName as string,
-        panelHeight: fields.panelHeight as string,
-        codeCharacterization: fields.codeCharacterization as string,
-        definitions: fields.definitions as string,
-        fencing: fields.fencing as string,
-        acresMW: fields.acresMW as string,
-        solarOnAgLand: fields.solarOnAgLand as string,
-        permit1041Output: fields.permit1041Output as string,
-        vegetationManagement: fields.vegetationManagement as string,
-        visualImpacts: fields.visualImpacts as string,
-        decommissioningBond: fields.decommissioningBond as string,
-        nonCSGDeployedSolar: fields.nonCSGDeployedSolar as string,
-        csgDeployedSolar: fields.csgDeployedSolar as string,
-        decisionFactor: fields.decisionFactor as string,
-        deployedSolar: fields.deployedSolar as string,
+        coordinates,
+        panelHeight: fields.panelHeight as PanelHeights,
+        codeCharacterization: fields.codeCharacterization as CodeCharacterization,
+        definitions: fields.definitions as Definitions,
+        fencing: fields.fencing as Fencing,
+        acresMW: fields.acresMW as AcresMW,
+        solarOnAgLand: fields.solarOnAgLand as SolarOnAgLand,
+        permit1041Output: fields.permit1041Output as Permit1041Output,
+        vegetationManagement: fields.vegetationManagement as VegetationManagement,
+        visualImpacts: fields.visualImpacts as VisualImpacts,
+        decommissioningBond: fields.decommissioningBond as DecommissioningBond,
+        nonCSGDeployedSolar: fields.nonCSGDeployedSolar as NonCSGDeployedSolar,
+        csgDeployedSolar: fields.csgDeployedSolar as CSGDeployedSolar,
+        decisionFactor: fields.decisionFactor as DecisionFactor,
+        deployedSolar: fields.deployedSolar as DeployedSolar,
     }
 }

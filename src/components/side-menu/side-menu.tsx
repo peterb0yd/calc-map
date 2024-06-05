@@ -5,18 +5,18 @@ import styles from './side-menu.module.css';
 import { Text } from '../text/text';
 import { Select } from '../select/select';
 import { mapOptions } from '@/utils/mapOptions';
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { FlexBox } from '../flex-box/flex-box';
+import { MapLegend } from '../map-legend/map-legend';
+import { MapFields } from '@/enums/map-fields.enums';
 
-interface SideMenuProps {
-    mapOption: string;
-}
-
-export const SideMenu = ({ mapOption }: SideMenuProps) => {
+export const SideMenu = () => {
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const mapField = searchParams.get('field') as MapFields ?? MapFields.PANEL_HEIGHT;
 
     const setMapOption = (value: string) => {
-        router.push(`/?map=${value}`);
+        router.push(`/?field=${value}`);
     }
 
     return (
@@ -24,13 +24,16 @@ export const SideMenu = ({ mapOption }: SideMenuProps) => {
             <div className={styles.logo}>
                 <Image src="/images/calc-logo.webp" alt="logo" fill />
             </div>
-            <FlexBox name="Menu" py="lg">
+            <FlexBox name="Menu" py="lg" col gap="lg">
                 <Select
-                    value={mapOption}
+                    value={mapField}
                     name='MapSelect'
                     label={'Select Map'}
                     options={mapOptions}
                     onSelect={setMapOption}
+                />
+                <MapLegend
+                    mapField={mapField}
                 />
             </FlexBox>
         </div>

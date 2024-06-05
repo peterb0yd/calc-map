@@ -1,9 +1,12 @@
 'use client';
-import { AcresMW, CodeCharacterization, CSGDeployedSolar, DecisionFactor, DecommissioningBond, Definitions, NonCSGDeployedSolar, PanelHeights, Permit1041Output, SolarOnAgLand, VegetationManagement, VisualImpacts, Fencing, DeployedSolar } from "@/interfaces/map-fields.interfaces";
+import { AcresMW, CodeCharacterization, CSGDeployedSolar, DecisionFactor, DecommissioningBond, Definitions, NonCSGDeployedSolar, PanelHeights, Permit1041Output, SolarOnAgLand, VegetationManagement, VisualImpacts, Fencing, DeployedSolar, MapFields } from "@/enums/map-fields.enums";
 import { useEffect, useRef, useState } from 'react'
 import { Loader } from '@googlemaps/js-api-loader';
 import styles from './interactive-map.module.css';
 import { ICounty } from '@/api/county/county.interfaces';
+import { useSearchParams } from 'next/navigation'
+import { mapColors } from "@/utils/mapColors";
+import { mapFieldToEnum } from "@/mappers/field.mapper";
 
 const loader = new Loader({
     apiKey: "AIzaSyAxRMopOY_mVRQHK1TA8BxzMZEnWZHvnlc",
@@ -19,52 +22,6 @@ const mapOptions = {
     region: 'CO',
     zoom: 7
 };
-
-const colorMap = [
-    'red',
-    'blue',
-    'green',
-    'yellow',
-    'purple',
-    'orange',
-    'pink',
-    'brown',
-];
-
-const getEnumFromMapOption = (mapOption: string) => {
-    switch (mapOption) {
-        case 'panelHeight':
-            return PanelHeights;
-        case 'codeCharacterization':
-            return CodeCharacterization;
-        case 'definitions':
-            return Definitions;
-        case 'fencing':
-            return Fencing;
-        case 'acresMW':
-            return AcresMW;
-        case 'solarOnAgLand':
-            return SolarOnAgLand;
-        case 'permit1041Output':
-            return Permit1041Output;
-        case 'vegetationManagement':
-            return VegetationManagement;
-        case 'visualImpacts':
-            return VisualImpacts;
-        case 'decommissioningBond':
-            return DecommissioningBond;
-        case 'nonCSGDeployedSolar':
-            return NonCSGDeployedSolar;
-        case 'csgDeployedSolar':
-            return CSGDeployedSolar;
-        case 'decisionFactor':
-            return DecisionFactor;
-        case 'deployedSolar':
-            return DeployedSolar;
-        default:
-            return {};
-    }
-}
 
 const setFeatures = (features: google.maps.Data.Feature[], index: number, county: ICounty) => {
     features.map((feature) => {
@@ -89,18 +46,21 @@ const setFeatures = (features: google.maps.Data.Feature[], index: number, county
 
 interface InteractiveMapProps {
     counties: Array<ICounty>;
-    mapOption: string;
 }
 
-export const InteractiveMap = ({ counties, mapOption }: InteractiveMapProps) => {
+export const InteractiveMap = ({ counties }: InteractiveMapProps) => {
     const mapRef = useRef<google.maps.Map>();
     const containerRef = useRef<HTMLDivElement>(null);
+    const searchParams = useSearchParams();
+    const mapField = searchParams.get('field') as MapFields ?? MapFields.PANEL_HEIGHT;
     const [mapSize, setMapSize] = useState({ width: 0, height: 0 });
 
     useEffect(() => {
         // load map
-        loader.importLibrary('maps').then(() => {
+        loader.importLibrary('maps').then(async () => {
             mapRef.current = new google.maps.Map(document.getElementById("map") as HTMLDivElement, mapOptions);
+
+            // const { AdvancedMarkerElement } = await google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
 
             counties.map((county, i) => {
                 mapRef.current?.data.loadGeoJson(
@@ -112,21 +72,36 @@ export const InteractiveMap = ({ counties, mapOption }: InteractiveMapProps) => 
                         county,
                     )
                 );
+
+                const lat = county.coordinates.latitude;
+                const lng = county.coordinates.longitude;
+                const position = new google.maps.LatLng(lat, lng);
+
+                const priceTag = document.createElement('div');
+                priceTag.className = 'price-tag';
+                priceTag.textContent = `$${county.name}`
+
+                // new AdvancedMarkerElement({
+                //     map: mapRef.current,
+                //     position: { lat: 37.42, lng: -122.1 },
+                //     content: priceTag,
+                // });
+
             });
 
-            mapRef.current?.data.setStyle((feature) => {
-                const index = Number(feature.getProperty('index'));
-                const isColorful = feature.getProperty('isColorful');
-                return {
-                    fillColor: isColorful ? 'green' : 'blue',
-                    strokeWeight: 2
-                }
-            });
+            // mapRef.current?.data.setStyle((feature) => {
+            //     const index = Number(feature.getProperty('index'));
+            //     const isColorful = feature.getProperty('isColorful');
+            //     return {
+            //         fillColor: isColorful ? 'green' : 'blue',
+            //         strokeWeight: 2
+            //     }
+            // });
 
-            mapRef.current?.data.addListener("click", (event: google.maps.Data.MouseEvent) => {
-                const isColorful = event.feature.getProperty("isColorful");
-                event.feature.setProperty("isColorful", !isColorful);
-            });
+            // mapRef.current?.data.addListener("click", (event: google.maps.Data.MouseEvent) => {
+            //     const isColorful = event.feature.getProperty("isColorful");
+            //     event.feature.setProperty("isColorful", !isColorful);
+            // });
 
             mapRef.current?.data.addListener("mouseover", (event: google.maps.Data.MouseEvent) => {
                 mapRef.current?.data.revertStyle();
@@ -137,6 +112,7 @@ export const InteractiveMap = ({ counties, mapOption }: InteractiveMapProps) => 
                 mapRef.current?.data.revertStyle();
             });
 
+            updateMapColors();
         });
 
         // resize map
@@ -151,17 +127,22 @@ export const InteractiveMap = ({ counties, mapOption }: InteractiveMapProps) => 
     }, [containerRef.current]);
 
     useEffect(() => {
-        const values = Object.values(getEnumFromMapOption(mapOption));
+        updateMapColors();
+    }, [mapField])
+
+    const updateMapColors = () => {
+        const values = Object.values(mapFieldToEnum(mapField));
         mapRef.current?.data.setStyle((feature) => {
-            const propValue = feature.getProperty(mapOption);
+            const propValue = feature.getProperty(mapField);
             const colorIndex = values.indexOf(propValue);
 
             return {
-                fillColor: colorMap[colorIndex],
+                fillColor: mapColors[colorIndex],
+                opacity: 1,
                 strokeWeight: 2
             }
         });
-    }, [mapOption])
+    }
 
     return (
         <div className={styles.InteractiveMap} ref={containerRef}>

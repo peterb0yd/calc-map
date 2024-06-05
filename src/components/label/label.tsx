@@ -9,7 +9,7 @@ interface LabelProps extends React.LabelHTMLAttributes<HTMLLabelElement>, PropsW
     noEvents?: boolean;
 }
 
-export const Label = ({ text, uppercase = true, name, noEvents, ...props }: LabelProps) => {
+export const Label = ({ text, uppercase, name, noEvents, ...props }: LabelProps) => {
     return (
         <label
             className={clsx(styles.Label, name, {
