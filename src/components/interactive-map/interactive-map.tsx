@@ -1,5 +1,5 @@
 'use client';
-import { AcresMW, CodeCharacterization, CSGDeployedSolar, DecisionFactor, DecommissioningBond, Definitions, NonCSGDeployedSolar, PanelHeights, Permit1041Output, SolarOnAgLand, VegetationManagement, VisualImpacts, Fencing, DeployedSolar, MapFields } from "@/enums/map-fields.enums";
+import { startCase } from 'lodash-es';
 import { useEffect, useRef, useState } from 'react'
 import { Loader } from '@googlemaps/js-api-loader';
 import styles from './interactive-map.module.css';
@@ -7,6 +7,7 @@ import { ICounty } from '@/api/county/county.interfaces';
 import { useSearchParams } from 'next/navigation'
 import { mapColors } from "@/utils/mapColors";
 import { mapFieldToEnum } from "@/mappers/field.mapper";
+import { MapFields } from '@/enums/map-fields.enums';
 
 const loader = new Loader({
     apiKey: "AIzaSyAxRMopOY_mVRQHK1TA8BxzMZEnWZHvnlc",
@@ -20,7 +21,8 @@ const mapOptions = {
         lng: -105.0500
     },
     region: 'CO',
-    zoom: 7
+    zoom: 7,
+    mapId: 'dee98a8120ceef95',
 };
 
 const setFeatures = (features: google.maps.Data.Feature[], index: number, county: ICounty) => {
@@ -60,9 +62,9 @@ export const InteractiveMap = ({ counties }: InteractiveMapProps) => {
         loader.importLibrary('maps').then(async () => {
             mapRef.current = new google.maps.Map(document.getElementById("map") as HTMLDivElement, mapOptions);
 
-            // const { AdvancedMarkerElement } = await google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
+            const { AdvancedMarkerElement } = await google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
 
-            counties.map((county, i) => {
+            const countyMarkers = counties.map((county, i) => {
                 mapRef.current?.data.loadGeoJson(
                     county.fileName,
                     undefined,
@@ -77,39 +79,48 @@ export const InteractiveMap = ({ counties }: InteractiveMapProps) => {
                 const lng = county.coordinates.longitude;
                 const position = new google.maps.LatLng(lat, lng);
 
-                const priceTag = document.createElement('div');
-                priceTag.className = 'price-tag';
-                priceTag.textContent = `$${county.name}`
+                const content = document.createElement('div');
+                content.className = 'price-tag';
+                content.textContent = startCase(county.name);
+                content.style.padding = '5px';
+                content.style.backgroundColor='black';
+                content.style.borderRadius = '5px';
+                content.style.fontSize = '12px';
+                content.style.color = 'white';
+                content.style.opacity = '0.4';
 
-                // new AdvancedMarkerElement({
-                //     map: mapRef.current,
-                //     position: { lat: 37.42, lng: -122.1 },
-                //     content: priceTag,
-                // });
+                const countyMarker = new AdvancedMarkerElement({
+                    map: mapRef.current,
+                    collisionBehavior: google.maps.CollisionBehavior.OPTIONAL_AND_HIDES_LOWER_PRIORITY,
+                    position,
+                    content,
+                });
 
+                return {
+                    name: county.name,
+                    element: countyMarker,
+                }
             });
-
-            // mapRef.current?.data.setStyle((feature) => {
-            //     const index = Number(feature.getProperty('index'));
-            //     const isColorful = feature.getProperty('isColorful');
-            //     return {
-            //         fillColor: isColorful ? 'green' : 'blue',
-            //         strokeWeight: 2
-            //     }
-            // });
-
-            // mapRef.current?.data.addListener("click", (event: google.maps.Data.MouseEvent) => {
-            //     const isColorful = event.feature.getProperty("isColorful");
-            //     event.feature.setProperty("isColorful", !isColorful);
-            // });
 
             mapRef.current?.data.addListener("mouseover", (event: google.maps.Data.MouseEvent) => {
                 mapRef.current?.data.revertStyle();
                 mapRef.current?.data.overrideStyle(event.feature, { strokeWeight: 4 });
+
+                for (const marker of countyMarkers) {
+                    if (event.feature.getProperty('name') === marker.name) {
+                        const content = marker.element.content as HTMLElement;
+                        content.style.opacity = '1';
+                    }
+                }
             });
 
             mapRef.current?.data.addListener("mouseout", (event: google.maps.Data.MouseEvent) => {
                 mapRef.current?.data.revertStyle();
+
+                for (const marker of countyMarkers) {
+                    const content = marker.element.content as HTMLElement;
+                    content.style.opacity = '0.4';
+                }
             });
 
             updateMapColors();
@@ -138,7 +149,6 @@ export const InteractiveMap = ({ counties }: InteractiveMapProps) => {
 
             return {
                 fillColor: mapColors[colorIndex],
-                opacity: 1,
                 strokeWeight: 2
             }
         });
