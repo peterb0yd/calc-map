@@ -13,3 +13,13 @@
     height: 60px;
     position: relative;
 }
+
+.countyData {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+.countyData p {
+    font-size: 12px;
+    margin: 0;
+}

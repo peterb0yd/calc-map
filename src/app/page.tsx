@@ -8,7 +8,7 @@ const Home = async () => {
 
     return (
         <main className={styles.Main}>
-            <SideMenu />
+            <SideMenu counties={counties} />
             <InteractiveMap counties={counties} />
         </main>
     );

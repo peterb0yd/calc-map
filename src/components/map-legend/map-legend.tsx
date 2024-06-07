@@ -13,14 +13,14 @@ export const MapLegend = ({ mapField }: MapLegendProps) => {
     const keyNames = Object.values(fieldEnum);
 
     return (
-        <FlexBox name={"Legend"} col gap="md">
+        <FlexBox col gap="md">
             {keyNames.map((name, index) => (
-                <FlexBox gap="sm" key={name}>
+                <FlexBox gap="sm" align="center" key={name}>
                     <div
                         className={styles.keyColor}
                         style={{ backgroundColor: mapColors[index] }}
                     />
-                    <p>{name}</p>
+                    <p className={styles.keyName}>{name}</p>
                 </FlexBox>
             ))}
         </FlexBox>

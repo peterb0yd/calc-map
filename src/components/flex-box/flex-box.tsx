@@ -5,12 +5,14 @@ interface FlexBoxProps {
     name?: string;
     width?: 'full' | 'auto';
     grow?: boolean;
+    align?: 'center' | 'start' | 'end';
+    justify?: 'center' | 'start' | 'end';
     gap?: 'sm' | 'md' | 'lg';
     py?: 'sm' | 'md' | 'lg' | 'xl';
     col?: boolean;
 }
 
-export const FlexBox = ({ name, width, gap, grow, col, py, children }: React.PropsWithChildren<FlexBoxProps>) => {
+export const FlexBox = ({ name, width, align, justify, gap, grow, col, py, children }: React.PropsWithChildren<FlexBoxProps>) => {
     return (
         <div
             className={clsx(
@@ -21,6 +23,12 @@ export const FlexBox = ({ name, width, gap, grow, col, py, children }: React.Pro
                     [styles['width-auto']]: width === 'auto',
                     [styles['grow']]: grow,
                     [styles['col']]: col,
+                    [styles['align-center']]: align === 'center',
+                    [styles['align-start']]: align === 'start',
+                    [styles['align-end']]: align === 'end',
+                    [styles['justify-center']]: justify === 'center',
+                    [styles['justify-start']]: justify === 'start',
+                    [styles['justify-end']]: justify === 'end',
                     [styles['gap-sm']]: gap === 'sm',
                     [styles['gap-md']]: gap === 'md',
                     [styles['gap-lg']]: gap === 'lg',
