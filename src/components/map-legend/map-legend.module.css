@@ -1,7 +1,7 @@
 
 .keyName {
     display: inline-block;
-    font-size: 12px;
+    font-size: var(--font-size-sm);
 }
 
 .keyColor {

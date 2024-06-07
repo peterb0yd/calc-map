@@ -26,14 +26,24 @@ export const setCountyMouseLeave = (map: google.maps.Map, countyMarkers: ICounty
 		for (const marker of countyMarkers) {
 			const content = marker.element.content as HTMLElement;
 			content.style.opacity = '0.4';
+            content.style.transform = 'scale(1)';
 		}
 	});
 };
 
-export const setCountyClick= (map: google.maps.Map, cb: (val: string) => void) => {
+export const setCountyClick= (map: google.maps.Map, countyMarkers:ICountyMarker[], cb: (val: string) => void) => {
 	map.data.addListener('click', (event: google.maps.Data.MouseEvent) => {
 		const feature = event.feature;
 		const name = feature.getProperty('name');
+        
+        for (const marker of countyMarkers) {
+			if (event.feature.getProperty('name') === marker.name) {
+				const content = marker.element.content as HTMLElement;
+				content.style.opacity = '1';
+                content.style.transform = 'scale(1.2)';
+			}
+		}
+
         cb(name as string);
 	});
 };

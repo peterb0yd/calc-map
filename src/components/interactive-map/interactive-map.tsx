@@ -85,7 +85,7 @@ export const InteractiveMap = ({ counties }: InteractiveMapProps) => {
 
             setCountyMouseEnter(mapRef.current, countyMarkers);
             setCountyMouseLeave(mapRef.current, countyMarkers);
-            setCountyClick(mapRef.current, setSelectedCounty);
+            setCountyClick(mapRef.current, countyMarkers, setSelectedCounty);
             updateMapColors();
         });
 
