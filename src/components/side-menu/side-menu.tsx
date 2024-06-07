@@ -26,6 +26,11 @@ export const SideMenu = ({ counties }: SideMenuProps) => {
     const setMapOption = (value: string) => {
         const newParams = new URLSearchParams();
         newParams.set('field', value ?? mapField);
+        if (countyName) {
+            newParams.set('county', countyName);
+        } else {
+            newParams.delete('county');
+        }
         router.push(`/?${newParams.toString()}`);
     }
 
