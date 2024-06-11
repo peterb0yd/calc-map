@@ -1,7 +1,9 @@
+import clsx from 'clsx';
 import styles from './text.module.css';
 
 interface TextProps {
     size: 'sm' | 'md' | 'lg' | 'display-sm' | 'display-md' | 'display-lg';
+    color: 'base' | 'muted' | 'primary';
     children: string;
 }
 
@@ -22,10 +24,15 @@ const getTag = (size: TextProps['size']) => {
     }
 }
 
-export const Text = ({ children, size }: TextProps) => {
+export const Text = ({ children, color, size }: TextProps) => {
     const TextTag = getTag(size);
     return (
-        <TextTag className={styles.Text}>
+        <TextTag className={clsx(
+            styles.Text, {
+            [styles.baseColor]: color === 'base',
+            [styles.mutedColor]: color === 'muted',
+            [styles.primaryColor]: color === 'primary',
+        })}>
             {children}
         </TextTag>
     );

@@ -1,4 +1,12 @@
-
 .Text {
-    
+}
+
+.baseColor {
+	color: var(--color-text-base);
+}
+.mutedColor {
+	color: var(--color-text-muted);
+}
+.primaryColor {
+	color: var(--color-text-primary);
 }

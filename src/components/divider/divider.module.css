@@ -1,0 +1,31 @@
+.Divider {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+}
+
+.line {
+	flex-grow: 1;
+	height: 1px;
+}
+
+.highlight {
+	background-color: var(--color-surface-highlight);
+}
+.muted {
+	background-color: var(--color-surface-muted);
+}
+.primary {
+	background-color: var(--color-primary);
+}
+.smMargin {
+	margin: 2px 0;
+}
+.lgMargin {
+	margin: 12px 0;
+}
+.mdMargin {
+	margin: 6px 0;
+}
