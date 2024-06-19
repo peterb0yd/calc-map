@@ -22,12 +22,8 @@ export const tableRecordToCounty = (record: Record<FieldSet>): ICounty => {
   try {
     coordinates = JSON.parse(fields.coordinates as string);
   } catch (error) {
-    console.error("Error parsing coordinates", error);
+    console.log("Error parsing coordinates", record.id);
   }
-  if (!fields || Object.keys(fields).length === 0) {
-    console.error("No fields found in record", record);
-    return {} as ICounty;
-  } 
   return {
     name: fields.Name as string,
     fileName: fields.fileName as string,
