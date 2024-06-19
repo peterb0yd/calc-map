@@ -1,115 +1,137 @@
-export enum PanelHeights {
-	MAX_10_FT = 'Maximum of 10 ft',
-	MAX_15_25_FT = 'Maximum of 15-25 ft',
-	MAX_25_FT_OR_GREATER = 'Maximum of 25 ft or greater',
-	NO_RESTRICTION_SPECIFIC_TO_SOLAR = 'No Restriction Specific to Solar',
-	DETERMINED_CASE_BY_CASE = 'Determined on a Case-by-Case Basis',
-	SOLAR_DEVELOPMENT_UNDER_MORATORIUM = 'Solar Development Under Moratorium',
+export enum Definitions {
+	SOLAR_SPECIFIC_DEFINITIONS = 'Solar Specific Definitions',
+	NO_RELEVANT_DEFINITIONS = 'No Relevant Definitions',
+	PUBLIC_UTILITY_DEFINITIONS = 'Public Utility Definitions',
+	SOLAR_AND_AGRIVOLTAIC_DEFINITIONS = 'Solar and Agrivoltaic Definitions',
+	REVISION_OR_MORAOTRIUM = 'Revision or moratorium',
 }
 
 export enum CodeCharacterization {
-	DETAILED_SOLAR_LAND_USE_REGULATIONS = 'Detailed Solar Land Use Regulations',
-	SOME_SOLAR_LAND_USE_REGULATIONS = 'Some Solar Land Use Regulations',
-	NO_LAND_USE_CODE_RELATED_TO_SOLAR = 'No Land Use Code Related to Solar',
-	SOLAR_DEVELOPMENT_UNDER_MORATORIUM = 'Solar Development Under Moratorium',
+	DETAILED_SOLAR_REGULATIONS = 'Detailed solar regulations',
+	NO_SOLAR_REGULATIONS = 'No Solar Regulations',
+	SOME_SOLAR_REGULATIONS = 'Some Solar Regulations',
+	CODE_IS_UNDER_DEVELOPMENT = 'Code is under development/revision/ moratorium',
 }
 
-export enum Definitions {
-	SOLAR_SPECIFIC_DEFINITIONS = 'Solar Specific Definitions',
-	SOLAR_AND_AGRIVOLTAIC_DEFINITIONS = 'Solar and Agrivoltaic Definitions',
-	PUBLIC_UTILITY_DEFINITIONS = 'Public Utility Definitions',
-	NO_RELEVANT_DEFINITIONS = 'No Relevant Definitions',
-}
-
-export enum Fencing {
-	SOLAR_SPECIFIC_FENCING_POLICY = 'Solar-Specific Fencing Policy',
-	FENCING_POLICY_MIGHT_APPLY_TO_SOLAR = 'Fencing Policy Might Apply to Solar',
-	NO_FENCING_POLICY = 'No Fencing Policy',
-}
-
-export enum AcresMW {
-	LAND_AREA_ACRES = 'Land Area (acres)',
+export enum AcresOrElec {
+	NO_INFORMATON_AVAILABLE = 'No Information Available',
 	INSTALLED_SOLAR_CAPACITY_MW = 'Installed Solar Capacity (MW)',
 	ELECTRICITY_END_USE = 'Electricity End-Use',
-	NO_CATEGORIZATION = 'No Categorization',
-}
-
-export enum SolarOnAgLand {
-	ALLOWED_WITH_APPROPRIATE_PERMIT = 'Allowed with Appropriate Permit',
-	SPECIFIC_POLICIES_PROTECTING_AG_LAND = 'Specific Policies Protecting Agricultural Land',
-	NOT_ALLOWED = 'Not Allowed',
-	NO_ZONED_OR_DESIGNATED_AG_LANDS = 'No Zoned or Designated Agricultural Lands',
-	SOLAR_DEVELOPMENT_UNDER_MORATORIUM = 'Solar Development Under Moratorium',
-}
-
-export enum Permit1041Output {
+	LAND_AREA_ACRES_AND_INSTALLED_SOLAR_CAPACITY_MW = 'Land Area (acres) and Installed Solar Capacity (MW)',
 	LAND_AREA_ACRES = 'Land Area (acres)',
-	INSTALLED_CAPACITY_MW = 'Installed Capacity (MW)',
-	DEVELOPMENT_ON_IRRIGATED_LAND = 'Development on Irrigated Land',
-	REQUIRED_NO_MINIMUM_ACREAGE_OR_CAPACITY = 'Required with No Minimum Acreage or Capacity',
-	NO_APPLICABLE_1041_REGULATIONS = 'No Applicable 1041 Regulations',
+	REVISION_OR_MORAOTRIUM = 'Revision or moratorium',
+	INSTALLED_SOLAR_CAPACITY_MW_AND_ELECTRICITY_END_USE = 'Installed Solar Capacity (MW) and Electricity End-Use',
+	LAND_AREA_ACRES_AND_INSTALLED_SOLAR_CAPACITY_MW_AND_ELECTRICITY_END_USE = 'Land Area (acres) and Installed Solar Capacity (MW) and Electricity End-Use',
+	LAND_AREA_ACRES_AND_ELECTRICITY_END_USE = 'Land Area (acres) and Electricity End-Use',
 }
 
-export enum VegetationManagement {
-	SOLAR_SPECIFIC_VEGETATION_MANAGEMENT_POLICY = 'Solar-Specific Vegetation Management Policy',
-	VEGETATION_MANAGEMENT_POLICY_MIGHT_APPLY_TO_SOLAR = 'Vegetation Management Policy Might Apply to Solar',
-	NO_VEGETATION_MANAGEMENT_POLICY = 'No Vegetation Management Policy',
+export enum PanelHeight {
+	MAXIMUM_OF_10_FT = 'Maximum of 10ft',
+	MAXIMUM_OF_15_25_FT = 'Maximum of 15-25ft',
+	MAXIMUM_OF_25_35_FT = 'Maximum of 25-35ft',
+	REVISION_OR_MORAOTRIUM = 'Revision or moratorium',
+	DETERMINED_ON_A_CASE_BY_CASE_BASIS = 'Determined on a case-by-case basis',
+	NO_RESTRICTION_SPECIFIC_TO_SOLAR = 'No restriction specific to solar',
 }
 
-export enum VisualImpacts {
-	SOLAR_SPECIFIC_VISUAL_IMPACT_POLICY = 'Solar-Specific Visual Impact Policy',
-	VISUAL_IMPACT_POLICY_MIGHT_APPLY_TO_SOLAR = 'Visual Impact Policy Might Apply to Solar',
-	NO_VISUAL_IMPACT_POLICY = 'No Visual Impact Policy',
-}
-
-export enum DecommissioningBond {
-	SOLAR_SPECIFIC_FINANCIAL_ASSURANCE_REQUIREMENT = 'Solar-Specific Financial Assurance Requirement',
-	FINANCIAL_ASSURANCE_REQUIREMENT_MIGHT_APPLY_TO_SOLAR = 'Financial Assurance Requirement Might Apply to Solar',
-	NO_FINANCIAL_ASSURANCE_REQUIREMENT = 'No Financial Assurance Requirement',
-}
-
-export enum NonCSGDeployedSolar {
+export enum DeployedSolar {
 	ZERO_MW = '0 MW',
 	LESS_THAN_50_MW = '< 50 MW',
 	FIFTY_TO_HUNDRED_MW = '50 MW - 100 MW',
 	HUNDRED_TO_HUNDRED_FIFTY_MW = '100 MW - 150 MW',
 	GREATER_THAN_150_MW = '> 150 MW',
+
 }
 
-export enum CSGDeployedSolar {
-	ZERO_MW = '0 MW',
-	LESS_THAN_5_MW = '< 5 MW',
-	FIVE_TO_TEN_MW = '5 MW - 10 MW',
-	GREATER_THAN_10_MW = '> 10 MW',
+export enum SolarOnAg {
+	ALLOWED_WITH_APPROPRIATE_PERMIT = 'Allowed with appropriate permit',
+	POLICIES_PROTECTING_AGRICULTURAL_LAND = 'Policies protecting agricultural land',
+	MORATORIUM = 'Moratorium',
+	INFORMATION_NOT_AVAILABLE = 'Information Not Available',
+	NOT_ALLOWED_ON_AG_LAND = 'Not allowed on ag land',
 }
 
-export enum DecisionFactor {
-	LAND_AREA_ACRES = 'Land Area (acres)',
-	INSTALLED_SOLAR_CAPACITY_MW = 'Installed Solar Capacity (MW)',
-	ELECTRICITY_END_USE = 'Electricity End-Use',
-	NO_CATEGORIZATION = 'No Categorization',
+export enum Permit1041 {
+	MAJOR_FACILITIES_OF_PUBLIC_UTILITIES = 'Major Facilities of Public Utilities',
+	ACRES_MW_AND_IRRIGATED_LAND_CLAUSE = 'Acres, MW, and irrigated land clause',
+	MW = 'MW',
+	NO_RELEVANT_1041_REQUIREMENTS = 'No Relevant 1041 Requirements',
+	IRRIGATED_LAND = 'Irrigated Land',
+	CODE_UNDER_MORATORIUM = 'Code Under Moratorium',
+	MW_AND_ACRES = 'MW and acres',
+	MW_AND_IRRIGATED_LAND_CLAUSE = 'MW and irrigated land clause',
+	ACREAGE = 'Acreage',
 }
 
-export enum DeployedSolar {
-	ZERO_MW = '0 MW',
-	LESS_THAN_5_MW = '< 5 MW',
-	FIVE_TO_TEN_MW = '5 MW - 10 MW',
-	GREATER_THAN_10_MW = '> 10 MW',
+export enum Fencing {
+	INFORMATION_NOT_AVAILABLE = 'Information not Available/No policy specific to solar',
+	FENCING_POLICY_THAT_MAY_APPLY_TO_SOLAR = 'Fencing Policy that may apply to Solar',
+	FENCE_REQUIRED = 'Fence Required',
+	REVISION_OR_MORAOTRIUM = 'Revision or moratorium',
 }
+
+export enum VegetationManagement {
+	INFORMATION_NOT_AVAILABLE = 'Information not Available/No policy specific to Vegetation Management',
+	SOLAR_SPECIFIC_VEGETATION_MANAGEMENT_REQUIRED = 'Solar Specific Vegetation Management Required',
+	VEGETATION_MANAGEMENT_POLICY_THAT_MAY_APPLY_TO_SOLAR = 'Vegetation Management Policy that may apply to Solar',
+	MORATORIUM = 'Moratorium',
+}
+
+export enum VisualImpacts {
+	INFORMATION_NOT_AVAILABLE = 'Information not available/No policy specific to solar',
+	SOLAR_SPECIFIC_VISUAL_IMPACT_POLICIES = 'Solar Specific Visual Impact Policies',
+	VISUAL_IMPACT_POLICIES_THAT_MAY_APPLY_TO_SOLAR = 'Visual Impact Policies that may apply to solar',
+	REVISION_OR_MORAOTRIUM = 'Revision or moratorium',
+}
+
+export enum DecommissioningPlan {
+	SOLAR_SPECIFIC_DECOMMISSIONING_REQUIRED = 'Solar Specific Decommissioning Required',
+	INFORMATION_NOT_AVAILABLE = 'Information not Available/No policy specific to solar',
+	DECOMMISSIONING_REGULATIONS_THAT_MAY_APPLY_TO_SOLAR = 'Decommisisioning Regulations that may apply to Solar',
+	MORATORIUM = 'Moratorium',
+}
+
+export enum DecommissioningBond {
+	NO_BOND_REQUIREMENT = 'No bond requiement/Information not available',
+	DETERMINED_DURING_APPLICATION_PROCESS = 'Determined during application process',	
+	BOND_REQUIRED = 'Bond required',
+	REVISION_OR_MORAOTRIUM = 'Revision or moratorium',
+}
+
+// export enum NonCSGDeployedSolar {
+// 	ZERO_MW = '0 MW',
+// 	LESS_THAN_50_MW = '< 50 MW',
+// 	FIFTY_TO_HUNDRED_MW = '50 MW - 100 MW',
+// 	HUNDRED_TO_HUNDRED_FIFTY_MW = '100 MW - 150 MW',
+// 	GREATER_THAN_150_MW = '> 150 MW',
+// }
+
+// export enum CSGDeployedSolar {
+// 	ZERO_MW = '0 MW',
+// 	LESS_THAN_5_MW = '< 5 MW',
+// 	FIVE_TO_TEN_MW = '5 MW - 10 MW',
+// 	GREATER_THAN_10_MW = '> 10 MW',
+// }
+
+// export enum DecisionFactor {
+// 	LAND_AREA_ACRES = 'Land Area (acres)',
+// 	INSTALLED_SOLAR_CAPACITY_MW = 'Installed Solar Capacity (MW)',
+// 	ELECTRICITY_END_USE = 'Electricity End-Use',
+// 	NO_CATEGORIZATION = 'No Categorization',
+// }
 
 export enum MapFields {
-	PANEL_HEIGHT = 'panelHeight',
-	CODE_CHARACTERIZATION = 'codeCharacterization',
-	DEFINITIONS = 'definitions',
-	FENCING = 'fencing',
-	ACRES_MW = 'acresMW',
-	SOLAR_ON_AG_LAND = 'solarOnAgLand',
-	PERMIT_1041_OUTPUT = 'permit1041Output',
-	VEGETATION_MANAGEMENT = 'vegetationManagement',
-	VISUAL_IMPACTS = 'visualImpacts',
-	DECOMMISSIONING_BOND = 'decommissioningBond',
-	NON_CSG_DEPLOYED_SOLAR = 'nonCSGDeployedSolar',
-	CSG_DEPLOYED_SOLAR = 'csgDeployedSolar',
-	DECISION_FACTOR = 'decisionFactor',
-	DEPLOYED_SOLAR = 'deployedSolar',
+	DEFINITIONS = 'Definitions',
+	CODE_CHARACTERIZATION = 'Code Characterization',
+	ACRES_OR_ELEC = 'Acres or Elec',
+	PANEL_HEIGHT = 'Panel Height',
+	DEPLOYED_SOLAR = 'Deployed Solar',
+	SOLAR_ON_AG = 'Solar on Ag',
+	PERMIT_1041 = '1041 Permit',
+	FENCING = 'Fencing',
+	VEGETATION_MANAGEMENT = 'Vegetation Management',
+	VISUAL_IMPACTS = 'Visual Impacts',
+	DECOMMISSIONING_PLAN = 'Decommissioning Plan',
+	DECOMMISSIONING_BOND = 'Decommissioning Bond',
 }
+

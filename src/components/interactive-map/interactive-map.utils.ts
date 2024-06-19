@@ -1,4 +1,5 @@
 import { ICounty } from "@/api/county/county.interfaces";
+import { MapFields } from "@/enums/map-fields.enums";
 
 export interface ICountyMarker {
 	name: string;
@@ -52,19 +53,17 @@ export const setCountyFeatures = (features: google.maps.Data.Feature[], index: n
     features.map((feature) => {
         feature.setProperty('name', county.name);
         feature.setProperty('index', index);
-        feature.setProperty('panelHeight', county.panelHeight);
-        feature.setProperty('codeCharacterization', county.codeCharacterization);
-        feature.setProperty('definitions', county.definitions);
-        feature.setProperty('fencing', county.fencing);
-        feature.setProperty('acresMW', county.acresMW);
-        feature.setProperty('solarOnAgLand', county.solarOnAgLand);
-        feature.setProperty('permit1041Output', county.permit1041Output);
-        feature.setProperty('vegetationManagement', county.vegetationManagement);
-        feature.setProperty('visualImpacts', county.visualImpacts);
-        feature.setProperty('decommissioningBond', county.decommissioningBond);
-        feature.setProperty('nonCSGDeployedSolar', county.nonCSGDeployedSolar);
-        feature.setProperty('csgDeployedSolar', county.csgDeployedSolar);
-        feature.setProperty('decisionFactor', county.decisionFactor);
-        feature.setProperty('deployedSolar', county.deployedSolar);
+		feature.setProperty(MapFields.DEFINITIONS, county.definitions);
+		feature.setProperty(MapFields.CODE_CHARACTERIZATION, county.codeCharacterization);
+		feature.setProperty(MapFields.ACRES_OR_ELEC, county.acresOrElec);
+		feature.setProperty(MapFields.PANEL_HEIGHT, county.panelHeight);
+		feature.setProperty(MapFields.DEPLOYED_SOLAR, county.deployedSolar);
+		feature.setProperty(MapFields.SOLAR_ON_AG, county.solarOnAg);
+		feature.setProperty(MapFields.PERMIT_1041, county.permit1041);
+		feature.setProperty(MapFields.FENCING, county.fencing);
+		feature.setProperty(MapFields.VEGETATION_MANAGEMENT, county.vegetationManagement);
+		feature.setProperty(MapFields.VISUAL_IMPACTS, county.visualImpacts);
+		feature.setProperty(MapFields.DECOMMISSIONING_PLAN, county.decommissioningPlan);
+		feature.setProperty(MapFields.DECOMMISSIONING_BOND, county.decommissioningBond);
     });
 }

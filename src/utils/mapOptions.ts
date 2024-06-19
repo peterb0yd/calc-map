@@ -5,32 +5,36 @@ export const mapOptions: {
     value: MapFields;
 }[] = [
     {
-        label: 'Panel Height',
-        value: MapFields.PANEL_HEIGHT,
-    }, 
+        label: 'Definitions',
+        value: MapFields.DEFINITIONS,
+    },
     {
         label: 'Code Characterization',
         value: MapFields.CODE_CHARACTERIZATION,
     },
     {
-        label: 'Definitions',
-        value: MapFields.DEFINITIONS,
+        label: 'Acres or Elec',
+        value: MapFields.ACRES_OR_ELEC,
+    },
+    {
+        label: 'Panel Height',
+        value: MapFields.PANEL_HEIGHT,
+    },
+    {
+        label: 'Deployed Solar',
+        value: MapFields.DEPLOYED_SOLAR,
+    },
+    {
+        label: 'Solar on Ag',
+        value: MapFields.SOLAR_ON_AG,
+    },
+    {
+        label: '1041 Permit',
+        value: MapFields.PERMIT_1041,
     },
     {
         label: 'Fencing',
         value: MapFields.FENCING,
-    },
-    {
-        label: 'Acres MW',
-        value: MapFields.ACRES_MW,
-    },
-    {
-        label: 'Solar on Ag Land',
-        value: MapFields.SOLAR_ON_AG_LAND,
-    },
-    {
-        label: 'Permit 1041 Output',
-        value: MapFields.PERMIT_1041_OUTPUT,
     },
     {
         label: 'Vegetation Management',
@@ -41,23 +45,11 @@ export const mapOptions: {
         value: MapFields.VISUAL_IMPACTS,
     },
     {
+        label: 'Decommissioning Plan',
+        value: MapFields.DECOMMISSIONING_PLAN,
+    },
+    {
         label: 'Decommissioning Bond',
         value: MapFields.DECOMMISSIONING_BOND,
     },
-    {
-        label: 'Non CSG Deployed Solar',
-        value: MapFields.NON_CSG_DEPLOYED_SOLAR,
-    },
-    {
-        label: 'CSG Deployed Solar',
-        value: MapFields.CSG_DEPLOYED_SOLAR,
-    },
-    {
-        label: 'Decision Factor',
-        value: MapFields.DECISION_FACTOR,
-    },
-    {
-        label: 'Deployed Solar',
-        value: MapFields.DEPLOYED_SOLAR,
-    }
 ]
