@@ -1,0 +1,12 @@
+.ScrollArea {
+	overflow-y: auto;
+	width: 100%;
+	scrollbar-color: red orange;
+	scrollbar-width: thin;
+}
+
+.scrollContent {
+    height: max-content;
+    padding: 0 1rem;
+    width: 100%;
+}

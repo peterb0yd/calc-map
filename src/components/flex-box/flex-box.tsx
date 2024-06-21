@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import styles from './flex-box.module.css';
 import clsx from 'clsx';
 
@@ -12,9 +13,10 @@ interface FlexBoxProps {
     col?: boolean;
 }
 
-export const FlexBox = ({ name, width, align, justify, gap, grow, col, py, children }: React.PropsWithChildren<FlexBoxProps>) => {
+export const FlexBox = forwardRef(({ name, width, align, justify, gap, grow, col, py, children }: React.PropsWithChildren<FlexBoxProps>, ref: React.Ref<HTMLDivElement>) => {
     return (
         <div
+            ref={ref}
             className={clsx(
                 name,
                 styles.FlexBox,
@@ -42,4 +44,4 @@ export const FlexBox = ({ name, width, align, justify, gap, grow, col, py, child
             {children}
         </div>
     );
-}
+});
