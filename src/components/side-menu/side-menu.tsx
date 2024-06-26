@@ -13,25 +13,58 @@ import { ICounty } from "@/api/county/county.interfaces";
 import { startCase } from "lodash-es";
 import { Divider } from "../divider/divider";
 import { ScrollArea } from "../scroll-area/scroll-area";
-import { PropsWithChildren, useEffect, useRef, useState } from "react";
+import { PropsWithChildren, createContext, useContext, useState } from "react";
+import { ChevronRight } from "../svg/chevron-right";
+import { ChevronLeft } from "../svg/chevron-left";
+import clsx from "clsx";
+import { Logo, LogoIcon } from "../logo/logo";
 
-export const SideMenu = ({ children }: PropsWithChildren) => {
+interface SideMenuProps extends PropsWithChildren {
+    expanded: boolean;
+    setExpanded: (val: boolean) => void;
+}
+
+const SideMenuContext = createContext<SideMenuProps>(undefined!);
+
+const useSideMenu = () => useContext(SideMenuContext);
+
+export const SideMenu = ({ children, expanded, setExpanded }: SideMenuProps) => {
+
+    const LogoComponent = expanded ? Logo : LogoIcon;
+
     return (
-        <div className={styles.SideMenu}>
-            {children}
-        </div >
+        <SideMenuContext.Provider value={{ expanded, setExpanded }}>
+            <div className={clsx(styles.SideMenu, {
+                [styles.collapsed]: !expanded,
+            })}>
+                <FlexBox width="full" justify="center">
+                    <LogoComponent />
+                </FlexBox>
+                {children}
+            </div >
+        </SideMenuContext.Provider>
     );
 }
 
-const TopContent = ({ children }: PropsWithChildren) => {
+const StaticContent = ({ children }: PropsWithChildren) => {
+    const { expanded } = useSideMenu();
+
+    if (!expanded) return null;
+
     return (
         <div className={styles.TopContent}>
-            {children}
+            <FlexBox py="lg" col gap="lg">
+                {children}
+            </FlexBox>
         </div>
     );
 }
 
-const BottomContent = ({ children }: PropsWithChildren) => {
+const ScrollableContent = ({ children }: PropsWithChildren) => {
+    const { expanded } = useSideMenu();
+
+    if (!expanded) return null;
+
     return (
         <div className={styles.BottomContent}>
             {children}
@@ -39,6 +72,23 @@ const BottomContent = ({ children }: PropsWithChildren) => {
     );
 }
 
+const ExpandToggle = () => {
+    const { expanded, setExpanded } = useSideMenu();
+
+    const IconComponent = expanded ? ChevronLeft : ChevronRight;
+
+    return (
+        <div
+            className={styles.ExpandToggle}
+            aria-label="toggle-sidebar-size"
+            onClick={() => setExpanded(!expanded)}
+        >
+            <IconComponent />
+        </div>
+    );
+}
+
 SideMenu.displayName = "SideMenu";
-SideMenu.TopContent = TopContent;
-SideMenu.BottomContent = BottomContent;
+SideMenu.StaticContent = StaticContent;
+SideMenu.ScrollableContent = ScrollableContent;
+SideMenu.ExpandToggle = ExpandToggle;

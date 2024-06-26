@@ -13,3 +13,16 @@ export const Logo = () => {
         </div>
     );
 }
+
+export const LogoIcon = () => {
+    return (
+        <div className={styles.LogoIcon}>
+            <Image
+                src="/images/calc-logo-icon.png"
+                alt="logo"
+                layout="fill"
+                objectFit="contain"
+            />
+        </div>
+    );
+}

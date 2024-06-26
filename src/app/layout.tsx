@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 // TODO: edit this
 export const metadata: Metadata = {
-    title: "Colorade Agrovoltaic Learning Center",
+    title: "Colorado Agrovoltaic Learning Center",
     description: "A map of Solar Development in Colorado",
 };
 

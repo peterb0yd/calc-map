@@ -1,0 +1,21 @@
+.colorBase {
+	color: var(--color-text-base);
+}
+
+.colorMuted {
+	color: var(--color-text-muted);
+}
+
+.colorPrimary {
+	color: var(--color-text-primary);
+}
+
+.sizeSm {
+	font-size: var(--font-size-sm);
+}
+.sizeMd {
+	font-size: var(--font-size-base);
+}
+.sizeLg {
+	font-size: var(--font-size-lg);
+}

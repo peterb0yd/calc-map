@@ -1,13 +1,18 @@
 .SideMenu {
 	display: flex;
+    position: relative;
 	flex-direction: column;
-	position: relative;
 	height: 100vh;
 	width: var(--side-menu-width);
 	border-right: 1px solid var(--color-primary);
 	box-shadow: 0 0 10px 0 var(--color-primary);
 	z-index: 100;
 	padding: 1rem;
+    padding-top: 4rem;
+}
+
+.collapsed {
+    width: var(--side-menu-width-collapsed);
 }
 
 .TopContent {
@@ -22,4 +27,16 @@
 	flex-direction: column;
 	flex-grow: 1;
 	overflow: auto;
+}
+
+.ExpandToggle { 
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: var(--side-menu-width-collapsed);
+    height: var(--side-menu-width-collapsed);
+    padding: 0.25rem;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: var(--color-surface-highlight);
 }

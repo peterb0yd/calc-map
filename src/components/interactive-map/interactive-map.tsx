@@ -9,6 +9,7 @@ import { mapColors } from "@/utils/mapColors";
 import { mapFieldToEnum } from "@/mappers/field.mapper";
 import { MapFields } from '@/enums/map-fields.enums';
 import { setCountyMouseEnter, setCountyMouseLeave, setCountyClick, setCountyFeatures, markerStyles, } from './interactive-map.utils';
+import clsx from 'clsx';
 
 const loader = new Loader({
     apiKey: "AIzaSyAxRMopOY_mVRQHK1TA8BxzMZEnWZHvnlc",
@@ -29,9 +30,11 @@ const mapOptions = {
 
 interface InteractiveMapProps {
     counties: Array<ICounty>;
+    sidebarExpanded: boolean;
+    setSidebarExpanded: (expanded: boolean) => void;
 }
 
-export const InteractiveMap = ({ counties }: InteractiveMapProps) => {
+export const InteractiveMap = ({ counties, sidebarExpanded, setSidebarExpanded }: InteractiveMapProps) => {
     const mapRef = useRef<google.maps.Map>();
     const containerRef = useRef<HTMLDivElement>(null);
     const searchParams = useSearchParams();
@@ -86,20 +89,15 @@ export const InteractiveMap = ({ counties }: InteractiveMapProps) => {
 
             setCountyMouseEnter(mapRef.current, countyMarkers);
             setCountyMouseLeave(mapRef.current, countyMarkers);
-            setCountyClick(mapRef.current, countyMarkers, setSelectedCounty);
+            setCountyClick(mapRef.current, countyMarkers, handleCountyClick);
             updateMapColors();
         });
 
-        // resize map
-        const handleResize = () => {
-            const width = containerRef.current?.offsetWidth as number;
-            const height = containerRef.current?.offsetHeight as number;
-            setMapSize({ width, height });
-        };
         handleResize();
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, [containerRef.current]);
+
 
     useEffect(() => {
         const newParams = new URLSearchParams();
@@ -113,8 +111,23 @@ export const InteractiveMap = ({ counties }: InteractiveMapProps) => {
     }, [selectedCounty]);
 
     useEffect(() => {
+        handleResize();
+    }, [sidebarExpanded]);
+
+    useEffect(() => {
         updateMapColors();
     }, [mapField])
+
+    const handleCountyClick = (countyName: string) => {
+        setSelectedCounty(countyName);
+        setSidebarExpanded(true);
+    }
+
+    const handleResize = () => {
+        const width = containerRef.current?.offsetWidth as number;
+        const height = containerRef.current?.offsetHeight as number;
+        setMapSize({ width, height });
+    };
 
     const updateMapColors = () => {
         const values = Object.values(mapFieldToEnum(mapField));
@@ -130,7 +143,9 @@ export const InteractiveMap = ({ counties }: InteractiveMapProps) => {
     }
 
     return (
-        <div className={styles.InteractiveMap} ref={containerRef}>
+        <div className={clsx(styles.InteractiveMap, {
+            [styles.expanded]: !sidebarExpanded,
+        })} ref={containerRef}>
             <div
                 id="map"
                 className={styles.Map}

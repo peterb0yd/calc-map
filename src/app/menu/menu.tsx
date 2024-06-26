@@ -4,18 +4,18 @@ import { mapOptions } from "@/utils/mapOptions";
 import { useRouter, useSearchParams } from "next/navigation";
 import { MapFields } from "@/enums/map-fields.enums";
 import { ICounty } from "@/api/county/county.interfaces";
-import { Logo } from "@/components/logo/logo";
 import { SideMenu } from "@/components/side-menu/side-menu";
 import { CountyInfo } from "@/components/county-info/county-info";
 import { Select } from "@/components/select/select";
-import { FlexBox } from "@/components/flex-box/flex-box";
 import { MapLegend } from "@/components/map-legend/map-legend";
 
 interface SideMenuProps {
     counties: Array<ICounty>;
+    expanded: boolean;
+    setExpanded: (expanded: boolean) => void;
 }
 
-export const Menu = ({ counties }: SideMenuProps) => {
+export const Menu = ({ counties, expanded, setExpanded }: SideMenuProps) => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const mapField =
@@ -35,31 +35,26 @@ export const Menu = ({ counties }: SideMenuProps) => {
     };
 
     return (
-        <SideMenu>
+        <SideMenu expanded={expanded} setExpanded={setExpanded}>
+            <SideMenu.ExpandToggle />
+            <SideMenu.StaticContent>
+                <Select
+                    value={mapField}
+                    name="MapSelect"
+                    label={"Select Map"}
+                    options={mapOptions}
+                    onSelect={setMapOption}
+                />
 
-            <SideMenu.TopContent>
-                <Logo />
+                <MapLegend mapField={mapField} />
+            </SideMenu.StaticContent>
 
-                <FlexBox py="lg" col gap="lg">
-                    <Select
-                        value={mapField}
-                        name="MapSelect"
-                        label={"Select Map"}
-                        options={mapOptions}
-                        onSelect={setMapOption}
-                    />
-
-                    <MapLegend mapField={mapField} />
-                </FlexBox>
-            </SideMenu.TopContent>
-
-            <SideMenu.BottomContent>
+            <SideMenu.ScrollableContent>
                 <CountyInfo county={county}>
                     <CountyInfo.StickyHeader />
                     <CountyInfo.Fields />
                 </CountyInfo>
-            </SideMenu.BottomContent>
-
+            </SideMenu.ScrollableContent>
         </SideMenu>
     );
 }

@@ -5,6 +5,10 @@
     height: 100vh;
 }
 
+.expanded {
+    width: calc(100vw - var(--side-menu-width-collapsed));
+}
+
 .Map {
     position: relative;
     width: 100%;
