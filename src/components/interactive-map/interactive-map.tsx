@@ -23,6 +23,7 @@ const mapOptions = {
     },
     region: 'CO',
     zoom: 7,
+    minZoom: 7,
     mapId: 'dee98a8120ceef95',
 };
 
@@ -75,7 +76,6 @@ export const InteractiveMap = ({ counties }: InteractiveMapProps) => {
                     collisionBehavior: google.maps.CollisionBehavior.OPTIONAL_AND_HIDES_LOWER_PRIORITY,
                     position,
                     content,
-                    zIndex: 100,
                 });
 
                 return {

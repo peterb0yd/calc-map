@@ -1,8 +1,8 @@
 import styles from "./page.module.css";
 import { InteractiveMap } from "@/components/interactive-map/interactive-map";
-import { SideMenu } from "@/components/side-menu/side-menu";
 import { CountyService } from "@/api/county/county.service";
 import { Suspense } from "react";
+import { Menu } from "./menu/menu";
 
 const Home = async () => {
     const counties = await CountyService.getCounties();
@@ -10,7 +10,7 @@ const Home = async () => {
     return (
         <main className={styles.Main}>
             <Suspense fallback={<div>Loading...</div>}>
-                <SideMenu counties={counties} />
+                <Menu counties={counties} />
                 <InteractiveMap counties={counties} />
             </Suspense>
         </main>

@@ -1,0 +1,16 @@
+
+.countyHeader {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 0.2rem;
+    position: sticky;
+    top: 0;
+    padding-bottom: 0.25rem;
+    background-color: var(--color-surface);
+}
+
+.FieldRow {
+	font-size: var(--font-size-sm);
+	margin: 0;
+}
