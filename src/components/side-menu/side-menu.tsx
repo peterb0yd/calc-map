@@ -13,7 +13,7 @@ import { ICounty } from "@/api/county/county.interfaces";
 import { startCase } from "lodash-es";
 import { Divider } from "../divider/divider";
 import { ScrollArea } from "../scroll-area/scroll-area";
-import { useRef } from "react";
+import { PropsWithChildren, useEffect, useRef, useState } from "react";
 
 interface SideMenuProps {
     counties: Array<ICounty>;
@@ -26,9 +26,20 @@ export const SideMenu = ({ counties }: SideMenuProps) => {
         (searchParams.get("field") as MapFields) ?? MapFields.PANEL_HEIGHT;
     const countyName = searchParams.get("county") as ICounty["name"];
     const county = counties.find((c) => c.name === countyName);
-    const mapInfoRef = useRef<HTMLDivElement>(null);
-    const mapInfoHeight = mapInfoRef.current?.clientHeight ?? 0;
-    const countyInfoHeight = `calc(68vh - ${mapInfoHeight ?? 0}px)`;
+    const bottomContentRef = useRef<HTMLDivElement>(null);
+    const [bottomContentHeight, setBottomCnontentHeight] = useState(0);
+    const countyInfoHeightPx = `calc(${bottomContentHeight}px - 1.5rem)`;
+
+    useEffect(() => {
+        const updateHeight = () => {
+            if (bottomContentRef.current) {
+                setBottomCnontentHeight(bottomContentRef.current.clientHeight);
+            }
+        };
+        window.addEventListener("resize", updateHeight);
+        updateHeight();
+        return () => window.removeEventListener("resize", updateHeight);
+    }, [bottomContentRef.current]);
 
     const setMapOption = (value: string) => {
         const newParams = new URLSearchParams();
@@ -41,19 +52,22 @@ export const SideMenu = ({ counties }: SideMenuProps) => {
         router.push(`/?${newParams.toString()}`);
     };
 
+    console.log(countyInfoHeightPx)
+
     return (
         <div className={styles.SideMenu}>
 
-            <div className={styles.logo}>
-                <Image
-                    src="/images/calc-logo-horizontal.png"
-                    alt="logo"
-                    layout="fill"
-                    objectFit="contain"
-                />
-            </div>
-            <FlexBox name="Menu" col gap="lg">
-                <FlexBox py="lg" col gap="lg" ref={mapInfoRef}>
+            <div className={styles.topContainer}>
+                <div className={styles.logo}>
+                    <Image
+                        src="/images/calc-logo-horizontal.png"
+                        alt="logo"
+                        layout="fill"
+                        objectFit="contain"
+                    />
+                </div>
+
+                <FlexBox py="lg" col gap="lg">
                     <Select
                         value={mapField}
                         name="MapSelect"
@@ -64,13 +78,17 @@ export const SideMenu = ({ counties }: SideMenuProps) => {
 
                     <MapLegend mapField={mapField} />
                 </FlexBox>
+            </div>
 
-                {county && (
-                    <>
-                        <Divider />
-                        <ScrollArea maxHeight={countyInfoHeight}>
-                            <FlexBox col gap="md">
+            <div className={styles.bottomContainer} ref={bottomContentRef}>
+                <FlexBox col gap="md" width="full">
+                    {county && (
+                        <>
+                            <div className={styles.countyHeader}>
+                                <Divider />
                                 <h2>{startCase(county.name)} County</h2>
+                            </div>
+                            <FlexBox col gap="md" width="full">
                                 <div className={styles.countyData}>
                                     <p>
                                         <strong>Definitions:</strong> {county.definitions ?? "n/a"}
@@ -116,10 +134,10 @@ export const SideMenu = ({ counties }: SideMenuProps) => {
                                     </p>
                                 </div>
                             </FlexBox>
-                        </ScrollArea>
-                    </>
-                )}
-            </FlexBox>
-        </div>
+                        </>
+                    )}
+                </FlexBox>
+            </div>
+        </div >
     );
-};
+}

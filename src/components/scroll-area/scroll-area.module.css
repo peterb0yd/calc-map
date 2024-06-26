@@ -1,12 +1,35 @@
 .ScrollArea {
 	overflow-y: auto;
 	width: 100%;
-	scrollbar-color: red orange;
+	scrollbar-color: var(--color-primary) var(--color-content);
 	scrollbar-width: thin;
 }
 
 .scrollContent {
     height: max-content;
-    padding: 0 1rem;
     width: 100%;
+}
+
+.padSm {
+    padding: 0.5rem;
+}
+
+.padMd {
+    padding: 1rem;
+}
+
+.padLg {
+    padding: 2rem;
+}
+
+.padBSm {
+    padding-bottom: 0.5rem;
+}
+
+.padBMd {
+    padding-bottom: 1rem;
+}
+
+.padBLg {
+    padding-bottom: 2rem;
 }

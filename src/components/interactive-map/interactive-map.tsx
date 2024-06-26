@@ -8,7 +8,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { mapColors } from "@/utils/mapColors";
 import { mapFieldToEnum } from "@/mappers/field.mapper";
 import { MapFields } from '@/enums/map-fields.enums';
-import { setCountyMouseEnter, setCountyMouseLeave, setCountyClick, setCountyFeatures, } from './interactive-map.utils';
+import { setCountyMouseEnter, setCountyMouseLeave, setCountyClick, setCountyFeatures, markerStyles, } from './interactive-map.utils';
 
 const loader = new Loader({
     apiKey: "AIzaSyAxRMopOY_mVRQHK1TA8BxzMZEnWZHvnlc",
@@ -63,18 +63,19 @@ export const InteractiveMap = ({ counties }: InteractiveMapProps) => {
 
                 const content = document.createElement('div');
                 content.textContent = startCase(county.name);
-                content.style.padding = '5px';
-                content.style.backgroundColor = 'black';
-                content.style.borderRadius = '5px';
-                content.style.fontSize = '12px';
-                content.style.color = 'white';
-                content.style.opacity = '0.4';
+                content.style.padding = markerStyles.padding;
+                content.style.backgroundColor = markerStyles.backgroundColor;
+                content.style.borderRadius = markerStyles.borderRadius;
+                content.style.fontSize = markerStyles.fontSize;
+                content.style.color = markerStyles.color;
+                content.style.opacity = markerStyles.opacity;
 
                 const countyMarker = new AdvancedMarkerElement({
                     map: mapRef.current,
                     collisionBehavior: google.maps.CollisionBehavior.OPTIONAL_AND_HIDES_LOWER_PRIORITY,
                     position,
                     content,
+                    zIndex: 100,
                 });
 
                 return {

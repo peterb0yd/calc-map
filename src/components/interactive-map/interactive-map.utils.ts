@@ -1,5 +1,25 @@
-import { ICounty } from "@/api/county/county.interfaces";
-import { MapFields } from "@/enums/map-fields.enums";
+import { ICounty } from '@/api/county/county.interfaces';
+import { MapFields } from '@/enums/map-fields.enums';
+
+export const markerStyles = {
+	padding: '5px',
+	backgroundColor: 'black',
+	borderRadius: '5px',
+	fontSize: '12px',
+	color: 'white',
+	opacity: '0.8',
+	transform: 'scale(1)',
+};
+
+const markerHoverStyles = {
+	opacity: '1',
+	transform: 'scale(1.2)',
+};
+
+const markerSelectedStyles = {
+	opacity: '1',
+	transform: 'scale(1.5)',
+};
 
 export interface ICountyMarker {
 	name: string;
@@ -12,9 +32,12 @@ export const setCountyMouseEnter = (map: google.maps.Map, countyMarkers: ICounty
 		map.data.overrideStyle(event.feature, { strokeWeight: 4 });
 
 		for (const marker of countyMarkers) {
-			if (event.feature.getProperty('name') === marker.name) {
+            const isSelected = marker.element.getAttribute('selected') === 'true';
+            const isHovered = event.feature.getProperty('name') === marker.name;
+            if (isHovered && !isSelected) {
 				const content = marker.element.content as HTMLElement;
-				content.style.opacity = '1';
+				content.style.opacity = markerHoverStyles.opacity;
+				content.style.transform = markerHoverStyles.transform;
 			}
 		}
 	});
@@ -26,33 +49,51 @@ export const setCountyMouseLeave = (map: google.maps.Map, countyMarkers: ICounty
 
 		for (const marker of countyMarkers) {
 			const content = marker.element.content as HTMLElement;
-			content.style.opacity = '0.4';
-            content.style.transform = 'scale(1)';
+			if (marker.element.getAttribute('selected') === 'true') {
+				content.style.opacity = markerSelectedStyles.opacity;
+				content.style.transform = markerSelectedStyles.transform;
+			} else {
+				content.style.opacity = markerStyles.opacity;
+				content.style.transform = markerStyles.transform;
+			}
 		}
 	});
 };
 
-export const setCountyClick= (map: google.maps.Map, countyMarkers:ICountyMarker[], cb: (val: string) => void) => {
+export const setCountyClick = (
+	map: google.maps.Map,
+	countyMarkers: ICountyMarker[],
+	cb: (val: string) => void
+) => {
 	map.data.addListener('click', (event: google.maps.Data.MouseEvent) => {
 		const feature = event.feature;
 		const name = feature.getProperty('name');
-        
-        for (const marker of countyMarkers) {
+
+		for (const marker of countyMarkers) {
+            const content = marker.element.content as HTMLElement;
 			if (event.feature.getProperty('name') === marker.name) {
-				const content = marker.element.content as HTMLElement;
-				content.style.opacity = '1';
-                content.style.transform = 'scale(1.2)';
-			}
+                marker.element.setAttribute('selected', 'true');
+				content.style.opacity = markerSelectedStyles.opacity;
+				content.style.transform = markerSelectedStyles.transform;
+			} else {
+                marker.element.setAttribute('selected', 'false');
+                content.style.opacity = markerStyles.opacity;
+				content.style.transform = markerStyles.transform;
+            }
 		}
 
-        cb(name as string);
+		cb(name as string);
 	});
 };
 
-export const setCountyFeatures = (features: google.maps.Data.Feature[], index: number, county: ICounty) => {
-    features.map((feature) => {
-        feature.setProperty('name', county.name);
-        feature.setProperty('index', index);
+export const setCountyFeatures = (
+	features: google.maps.Data.Feature[],
+	index: number,
+	county: ICounty
+) => {
+	features.map((feature) => {
+		feature.setProperty('name', county.name);
+		feature.setProperty('index', index);
 		feature.setProperty(MapFields.DEFINITIONS, county.definitions);
 		feature.setProperty(MapFields.CODE_CHARACTERIZATION, county.codeCharacterization);
 		feature.setProperty(MapFields.ACRES_OR_ELEC, county.acresOrElec);
@@ -65,5 +106,5 @@ export const setCountyFeatures = (features: google.maps.Data.Feature[], index: n
 		feature.setProperty(MapFields.VISUAL_IMPACTS, county.visualImpacts);
 		feature.setProperty(MapFields.DECOMMISSIONING_PLAN, county.decommissioningPlan);
 		feature.setProperty(MapFields.DECOMMISSIONING_BOND, county.decommissioningBond);
-    });
-}
+	});
+};
