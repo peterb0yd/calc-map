@@ -45,3 +45,5 @@ export const FlexBox = forwardRef(({ name, width, align, justify, gap, grow, col
         </div>
     );
 });
+
+FlexBox.displayName = 'FlexBox';
