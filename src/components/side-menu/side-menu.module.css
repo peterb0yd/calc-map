@@ -1,6 +1,6 @@
 .SideMenu {
 	display: flex;
-    position: relative;
+	position: relative;
 	flex-direction: column;
 	height: 100vh;
 	width: var(--side-menu-width);
@@ -8,11 +8,27 @@
 	box-shadow: 0 0 10px 0 var(--color-primary);
 	z-index: 100;
 	padding: 1rem;
-    padding-top: 4rem;
+	padding-top: 4.5rem;
 }
 
 .collapsed {
-    width: var(--side-menu-width-collapsed);
+	width: var(--side-menu-width-collapsed);
+}
+
+.ExpandToggle {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	width: calc(var(--side-menu-width-collapsed) - 10px);
+	height: calc(var(--side-menu-width-collapsed) - 10px);
+	padding: 0.25rem;
+	border-radius: 5px;
+	cursor: pointer;
+	background-color: var(--color-surface-highlight);
+
+    &:hover {
+        background-color: var(--color-surface-highlight-hover);
+    }
 }
 
 .TopContent {
@@ -27,16 +43,4 @@
 	flex-direction: column;
 	flex-grow: 1;
 	overflow: auto;
-}
-
-.ExpandToggle { 
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: var(--side-menu-width-collapsed);
-    height: var(--side-menu-width-collapsed);
-    padding: 0.25rem;
-    border-radius: 5px;
-    cursor: pointer;
-    background-color: var(--color-surface-highlight);
 }
