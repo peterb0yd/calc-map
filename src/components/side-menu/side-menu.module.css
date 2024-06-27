@@ -8,19 +8,21 @@
 	box-shadow: 0 0 10px 0 var(--color-primary);
 	z-index: 100;
 	padding: 1rem;
-	padding-top: 4.5rem;
+    transition: width 0.2s;
 }
 
 .collapsed {
 	width: var(--side-menu-width-collapsed);
+    padding: 0;
+    padding-top: 5rem;
 }
 
 .ExpandToggle {
 	position: absolute;
-	top: 5px;
-	right: 5px;
-	width: calc(var(--side-menu-width-collapsed) - 10px);
-	height: calc(var(--side-menu-width-collapsed) - 10px);
+	top: 1rem;
+	right: 1rem;
+	width: calc(var(--side-menu-width-collapsed) - 20px);
+	height: calc(var(--side-menu-width-collapsed) - 20px);
 	padding: 0.25rem;
 	border-radius: 5px;
 	cursor: pointer;
@@ -29,16 +31,21 @@
     &:hover {
         background-color: var(--color-surface-highlight-hover);
     }
+
+    &[data-expanded="false"] {
+        right: 50%;
+        transform: translateX(50%);
+    }
 }
 
-.TopContent {
+.StaticContent {
 	display: flex;
 	flex-direction: column;
 	flex-shrink: 1;
 	flex-grow: 0;
 }
 
-.BottomContent {
+.ScrollableContent {
 	display: flex;
 	flex-direction: column;
 	flex-grow: 1;

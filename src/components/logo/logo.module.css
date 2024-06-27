@@ -1,7 +1,8 @@
 
 .Logo {
-	width: 100%;
-	height: 90px;
+    --width-val: 180px;
+	width: var(--width-val);
+	height: calc(var(--width-val) / 2.8);
 	position: relative;
 }
 

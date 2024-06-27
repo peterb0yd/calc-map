@@ -1,7 +1,7 @@
 "use client"
 
 import { ICounty } from "@/api/county/county.interfaces";
-import { InteractiveMap } from "@/components/interactive-map/interactive-map";
+import { InteractiveMap } from "@/app/interactive-map/interactive-map";
 import { useState } from "react";
 import { Menu } from "./menu/menu";
 

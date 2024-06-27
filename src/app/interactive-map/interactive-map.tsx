@@ -17,12 +17,11 @@ const loader = new Loader({
     libraries: ["maps"]
 });
 
-const mapOptions = {
+const mapOptions: google.maps.MapOptions = {
     center: {
         lat: 39.4000,
         lng: -105.0500
     },
-    region: 'CO',
     zoom: 7,
     minZoom: 7,
     mapId: 'dee98a8120ceef95',
@@ -40,7 +39,6 @@ export const InteractiveMap = ({ counties, sidebarExpanded, setSidebarExpanded }
     const searchParams = useSearchParams();
     const router = useRouter();
     const mapField = searchParams.get('field') as MapFields ?? MapFields.PANEL_HEIGHT;
-    const [mapSize, setMapSize] = useState({ width: 0, height: 0 });
     const [selectedCounty, setSelectedCounty] = useState<string | null>(null);
 
     useEffect(() => {
@@ -92,10 +90,6 @@ export const InteractiveMap = ({ counties, sidebarExpanded, setSidebarExpanded }
             setCountyClick(mapRef.current, countyMarkers, handleCountyClick);
             updateMapColors();
         });
-
-        handleResize();
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
     }, [containerRef.current]);
 
 
@@ -111,10 +105,6 @@ export const InteractiveMap = ({ counties, sidebarExpanded, setSidebarExpanded }
     }, [selectedCounty]);
 
     useEffect(() => {
-        handleResize();
-    }, [sidebarExpanded]);
-
-    useEffect(() => {
         updateMapColors();
     }, [mapField])
 
@@ -122,12 +112,6 @@ export const InteractiveMap = ({ counties, sidebarExpanded, setSidebarExpanded }
         setSelectedCounty(countyName);
         setSidebarExpanded(true);
     }
-
-    const handleResize = () => {
-        const width = containerRef.current?.offsetWidth as number;
-        const height = containerRef.current?.offsetHeight as number;
-        setMapSize({ width, height });
-    };
 
     const updateMapColors = () => {
         const values = Object.values(mapFieldToEnum(mapField));
@@ -149,10 +133,6 @@ export const InteractiveMap = ({ counties, sidebarExpanded, setSidebarExpanded }
             <div
                 id="map"
                 className={styles.Map}
-                style={{
-                    width: `${mapSize.width}px`,
-                    height: `${mapSize.height}px`
-                }}
             />
         </div>
     )

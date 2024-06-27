@@ -1,18 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import styles from "./side-menu.module.css";
-import { Text } from "../text/text";
-import { Select } from "../select/select";
-import { mapOptions } from "@/utils/mapOptions";
-import { useRouter, useSearchParams } from "next/navigation";
 import { FlexBox } from "../flex-box/flex-box";
-import { MapLegend } from "../map-legend/map-legend";
-import { MapFields } from "@/enums/map-fields.enums";
-import { ICounty } from "@/api/county/county.interfaces";
-import { startCase } from "lodash-es";
-import { Divider } from "../divider/divider";
-import { ScrollArea } from "../scroll-area/scroll-area";
 import { PropsWithChildren, createContext, useContext, useState } from "react";
 import { ChevronRight } from "../svg/chevron-right";
 import { ChevronLeft } from "../svg/chevron-left";
@@ -32,12 +21,14 @@ export const SideMenu = ({ children, expanded, setExpanded }: SideMenuProps) => 
 
     const LogoComponent = expanded ? Logo : LogoIcon;
 
+    const logoJustify = expanded ? "start" : "center";
+
     return (
         <SideMenuContext.Provider value={{ expanded, setExpanded }}>
             <div className={clsx(styles.SideMenu, {
                 [styles.collapsed]: !expanded,
             })}>
-                <FlexBox width="full" justify="center">
+                <FlexBox width="full" justify={logoJustify}>
                     <LogoComponent />
                 </FlexBox>
                 {children}
@@ -52,7 +43,7 @@ const StaticContent = ({ children }: PropsWithChildren) => {
     if (!expanded) return null;
 
     return (
-        <div className={styles.TopContent}>
+        <div className={styles.StaticContent}>
             <FlexBox py="lg" col gap="lg">
                 {children}
             </FlexBox>
@@ -66,7 +57,7 @@ const ScrollableContent = ({ children }: PropsWithChildren) => {
     if (!expanded) return null;
 
     return (
-        <div className={styles.BottomContent}>
+        <div className={styles.ScrollableContent}>
             {children}
         </div>
     );
@@ -80,6 +71,7 @@ const ExpandToggle = () => {
     return (
         <div
             className={styles.ExpandToggle}
+            data-expanded={expanded}
             aria-label="toggle-sidebar-size"
             onClick={() => setExpanded(!expanded)}
         >
